@@ -1,0 +1,3 @@
+#!/bin/bash
+
+(cd build && node watch.js & cd build && node server/index.js)
