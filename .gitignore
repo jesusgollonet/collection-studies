@@ -2,3 +2,4 @@
 build/node_modules/*
 build/elm/elm-stuff/*
 build/output/*.png
+build/public/js/elm.js

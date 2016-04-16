@@ -7,11 +7,18 @@ import Array exposing (..)
 import List exposing (concat)
 
 main =
-  let w = 500
-      h = 500
+  let c = cnv 500 500
   in
-      collage w h
-        (concat [[filled grey (square (500))], toList ( map drawSq ( initialize 1480 (arrangeInCircle w h ((w / 2) * 0.9) )))])
+      collage c.width c.height ((bg c):: (collection c))
+
+bg cnv =
+  filled grey (square (toFloat cnv.width))
+
+collection cnv = 
+  let w = toFloat cnv.width
+      h = toFloat cnv.height
+  in
+      toList ( map drawSq ( initialize 1480 (arrangeInCircle w h ((w / 2) * 0.9) )))
 
 arrangeInCircle w h r i =
   let tau = 2 * pi
@@ -27,6 +34,16 @@ arrangeInCircle w h r i =
   in
       squareWith position size rotation
 
+type alias Cnv = 
+  { width : Int 
+  , height : Int 
+  }
+
+cnv : Int -> Int -> Cnv
+cnv w h =
+  { width = w
+  , height = h
+  }
 
 type alias Sq =
   { position : ( Float, Float )
