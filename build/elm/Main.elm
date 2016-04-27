@@ -7,29 +7,25 @@ import Array exposing (..)
 import List exposing (concat)
 
 -- what is this program trying to accomplish?
--- draw a square and a collection of objects
-
+-- draw a collection of objects in a 'canvas'
+-- render canvas collection
 
 -- create cnv (conceptual canvas)
 -- create collage passing background and collection
 main : Element
 main =
   let c = cnv 500 500 grey
-      {width, height} = c
+      elements = collection c
   in
-      collage width height ((bg c):: (collection c))
+      drawCnv c elements
 
--- background
-bg : Cnv -> Form
-bg cnv =
-  filled cnv.color (square (toFloat cnv.width))
-
--- create collection of objects
+-- create collection of objects (i think this should be split into 2. create collection + render)
 collection : Cnv -> List Form 
 collection cnv = 
   toList ( map drawSq ( initialize 1480 (arrange cnv)))
 
--- arrange single element give its index
+
+-- arrange single element given its index.
 arrange : Cnv -> Int -> Sq
 arrange cnv i =
   let r =  ((toFloat cnv.width / 2) * 0.9)
@@ -37,6 +33,7 @@ arrange cnv i =
       pctInRing = toFloat (i % 40) / 40
       ring = toFloat (i // 40)
       ringPct = ring /toFloat (480 // 40)
+
       position = 
         ( cos ( pctInRing * tau ) * ( r * ringPct ) 
         , sin ( pctInRing * tau ) * ( r * ringPct )
@@ -62,6 +59,9 @@ cnv w h c =
   , color = c
   }
 
+drawCnv : Cnv -> List Form -> Element
+drawCnv cnv coll = 
+  collage cnv.width cnv.height ((filled cnv.color (square (toFloat cnv.width))):: coll)
 
 -- an element in our collection
 type alias Sq =
