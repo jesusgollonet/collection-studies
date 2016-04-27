@@ -6,21 +6,35 @@ import Color exposing (..)
 import Array exposing (..)
 import List exposing (concat)
 
+-- what is this program trying to accomplish?
+-- draw a square and a collection of objects
+
+
+-- create cnv (conceptual canvas)
+-- create collage passing background and collection
+main : Element
 main =
-  let c = cnv 500 500
+  let c = cnv 500 500 grey
+      {width, height} = c
   in
-      collage c.width c.height ((bg c):: (collection c))
+      collage width height ((bg c):: (collection c))
 
+-- background
+bg : Cnv -> Form
 bg cnv =
-  filled grey (square (toFloat cnv.width))
+  filled cnv.color (square (toFloat cnv.width))
 
+-- create collection of objects
+collection : Cnv -> List Form 
 collection cnv = 
   let w = toFloat cnv.width
       h = toFloat cnv.height
   in
-      toList ( map drawSq ( initialize 1480 (arrangeInCircle w h ((w / 2) * 0.9) )))
+      toList ( map drawSq ( initialize 1480 (arrange w h ((w / 2) * 0.9) )))
 
-arrangeInCircle w h r i =
+-- arrange single element give its index
+arrange : Float -> Float -> Float -> Int -> Sq
+arrange w h r i =
   let tau = 2 * pi
       pctInRing = toFloat (i % 40) / 40
       ring = toFloat (i // 40)
@@ -34,23 +48,29 @@ arrangeInCircle w h r i =
   in
       squareWith position size rotation
 
+-- MODELS 
+
+-- canvas
 type alias Cnv = 
   { width : Int 
   , height : Int 
+  , color : Color
   }
 
-cnv : Int -> Int -> Cnv
-cnv w h =
+cnv : Int -> Int -> Color -> Cnv
+cnv w h c =
   { width = w
   , height = h
+  , color = c
   }
 
+
+-- an element in our collection
 type alias Sq =
   { position : ( Float, Float )
   , size : Float
   , rotation : Float
   }
-
 
 squareWith : ( Float, Float ) -> Float -> Float -> Sq
 squareWith pos size rotation =
@@ -59,7 +79,7 @@ squareWith pos size rotation =
   , rotation = rotation
   }
 
-
+-- render element
 drawSq : Sq -> Form
 drawSq m =
   rotate m.rotation (move m.position (filled black (square m.size)))
