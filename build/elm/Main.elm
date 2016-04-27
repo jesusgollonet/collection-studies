@@ -27,15 +27,13 @@ bg cnv =
 -- create collection of objects
 collection : Cnv -> List Form 
 collection cnv = 
-  let w = toFloat cnv.width
-      h = toFloat cnv.height
-  in
-      toList ( map drawSq ( initialize 1480 (arrange w h ((w / 2) * 0.9) )))
+  toList ( map drawSq ( initialize 1480 (arrange cnv)))
 
 -- arrange single element give its index
-arrange : Float -> Float -> Float -> Int -> Sq
-arrange w h r i =
-  let tau = 2 * pi
+arrange : Cnv -> Int -> Sq
+arrange cnv i =
+  let r =  ((toFloat cnv.width / 2) * 0.9)
+      tau = 2 * pi
       pctInRing = toFloat (i % 40) / 40
       ring = toFloat (i // 40)
       ringPct = ring /toFloat (480 // 40)
