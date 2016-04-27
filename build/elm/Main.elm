@@ -1,5 +1,6 @@
 module Main (..) where
 
+import Sq exposing (Sq, squareWith, drawSq)
 import Graphics.Element exposing (..)
 import Graphics.Collage exposing (..)
 import Color exposing (..)
@@ -63,21 +64,3 @@ drawCnv : Cnv -> List Form -> Element
 drawCnv cnv coll = 
   collage cnv.width cnv.height ((filled cnv.color (square (toFloat cnv.width))):: coll)
 
--- an element in our collection
-type alias Sq =
-  { position : ( Float, Float )
-  , size : Float
-  , rotation : Float
-  }
-
-squareWith : ( Float, Float ) -> Float -> Float -> Sq
-squareWith pos size rotation =
-  { position = pos
-  , size = size
-  , rotation = rotation
-  }
-
--- render element
-drawSq : Sq -> Form
-drawSq m =
-  rotate m.rotation (move m.position (filled black (square m.size)))
