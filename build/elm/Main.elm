@@ -1,8 +1,9 @@
 module Main (..) where
 
 import Sq exposing (Sq, squareWith, drawSq)
+import Cnv exposing (Cnv, cnv, drawCnv)
+import Graphics.Collage exposing (Form)
 import Graphics.Element exposing (..)
-import Graphics.Collage exposing (..)
 import Color exposing (..)
 import Array exposing (..)
 import List exposing (concat)
@@ -45,22 +46,4 @@ arrange cnv i =
       squareWith position size rotation
 
 -- MODELS 
-
--- canvas
-type alias Cnv = 
-  { width : Int 
-  , height : Int 
-  , color : Color
-  }
-
-cnv : Int -> Int -> Color -> Cnv
-cnv w h c =
-  { width = w
-  , height = h
-  , color = c
-  }
-
-drawCnv : Cnv -> List Form -> Element
-drawCnv cnv coll = 
-  collage cnv.width cnv.height ((filled cnv.color (square (toFloat cnv.width))):: coll)
 

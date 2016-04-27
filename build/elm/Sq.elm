@@ -9,6 +9,7 @@ type alias Sq =
   , rotation : Float
   }
 
+-- constructor
 squareWith : ( Float, Float ) -> Float -> Float -> Sq
 squareWith pos size rotation =
   { position = pos
@@ -16,7 +17,7 @@ squareWith pos size rotation =
   , rotation = rotation
   }
 
--- render element
+-- render 
 drawSq : Sq -> Form
 drawSq m =
   rotate m.rotation (move m.position (filled black (square m.size)))
