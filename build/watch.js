@@ -9,7 +9,7 @@ function compileElmFile(){
     });
 }
 // One-liner for current directory, ignores .dotfiles
-chokidar.watch('elm/Main.elm', {ignored: /[\/\\]\./}).on('change', (path) => {
+chokidar.watch('elm/*.elm', {ignored: /[\/\\]\./}).on('change', (path) => {
     console.log(path, 'changed');
     compileElmFile();
 });
