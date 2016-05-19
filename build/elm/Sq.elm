@@ -1,5 +1,5 @@
-module Sq where
-import Graphics.Collage exposing (..)
+module Sq exposing (..) 
+import Collage exposing (..)
 import Color exposing (..)
 
 -- an element in our collection

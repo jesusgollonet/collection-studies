@@ -1,7 +1,7 @@
-module Cnv where 
+module Cnv exposing (..) 
 import Color exposing (..)
-import Graphics.Collage exposing (..)
-import Graphics.Element exposing (..)
+import Collage exposing (..)
+import Element exposing (..)
 
 -- canvas
 type alias Cnv = 
@@ -17,7 +17,7 @@ cnv w h c =
   , color = c
   }
 
-drawCnv : Cnv -> List Form -> Element
-drawCnv cnv coll = 
-  collage cnv.width cnv.height ((filled cnv.color (square (toFloat cnv.width))):: coll)
+drawCnv : Cnv -> Form
+drawCnv cnv = 
+  filled cnv.color (square (toFloat cnv.width))
 

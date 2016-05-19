@@ -1,7 +1,7 @@
 var container = document.getElementById('main');
 container.style.width = '500px';
 container.style.height = '500px';
-Elm.embed(Elm.Main, container);
+Elm.Main.embed(container);
 var cnv = container.getElementsByTagName('canvas')[0];
 
 var xhr = new XMLHttpRequest();
